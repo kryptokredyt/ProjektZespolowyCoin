@@ -1084,16 +1084,18 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
 
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
-    int64 nSubsidy = 50 * COIN;
+    int64 nSubsidy = 128 * COIN;
 
-    // Subsidy is cut in half every 840000 blocks, which will occur approximately every 4 years
-    nSubsidy >>= (nHeight / 840000); // Litecoin: 840k blocks in ~4 years
+    // Subsidy is cut in half every 300000 blocks, which will occur approximately every 1 year
+    nSubsidy >>= (nHeight / 300000); // Projekt Zespolowy Coin: 300k blocks in ~1 years
 
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 3.5 * 24 * 60 * 60; // Litecoin: 3.5 days
-static const int64 nTargetSpacing = 2.5 * 60; // Litecoin: 2.5 minutes
+//static const int64 nTargetTimespan = 3.5 * 24 * 60 * 60; // Litecoin: 3.5 days
+static const int64 nTargetTimespan = 1 * 24 * 60 * 60; // Projekt Zespolowy Coin: 1 days
+//static const int64 nTargetSpacing = 2.5 * 60; // Litecoin: 2.5 minutes
+static const int64 nTargetSpacing = 2 * 60; // Projekt Zespolowy Coin: 2 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
 //
@@ -2779,7 +2781,8 @@ bool InitBlockIndex() {
         //   vMerkleTree: 97ddfbbae6
 
         // Genesis block
-        const char* pszTimestamp = "NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56";
+        //const char* pszTimestamp = "NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56";
+        const char* pszTimestamp = "Chuj w dupe nierobom i debilom";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2791,13 +2794,15 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1317972665;
+        //block.nTime    = 1317972665;
+        block.nTime    = 1399681159;
         block.nBits    = 0x1e0ffff0;
         block.nNonce   = 2084524493;
 
         if (fTestNet)
         {
-            block.nTime    = 1317798646;
+            //block.nTime    = 1317798646;
+            block.nTime    = 1399681084;
             block.nNonce   = 385270584;
         }
 
