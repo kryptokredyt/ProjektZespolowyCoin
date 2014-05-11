@@ -30,7 +30,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Bind to given address and always listen on it. Use [host]:port notation for "
 "IPv6"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
-"Cannot obtain a lock on data directory %s. Litecoin is probably already "
+"Cannot obtain a lock on data directory %s. PZC is probably already "
 "running."),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Error: The transaction was rejected! This might happen if some of the coins "
@@ -63,7 +63,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "This is a pre-release test build - use at your own risk - do not use for "
 "mining or merchant applications"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
-"Unable to bind to %s on this computer. Litecoin is probably already running."),
+"Unable to bind to %s on this computer. PZC is probably already running."),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Warning: -paytxfee is set very high! This is the transaction fee you will "
 "pay if you send a transaction."),
@@ -72,7 +72,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "or other nodes may need to upgrade."),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Warning: Please check that your computer's date and time are correct! If "
-"your clock is wrong Litecoin will not work properly."),
+"your clock is wrong PZC will not work properly."),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Warning: error reading wallet.dat! All keys read correctly, but transaction "
 "data or address book entries might be missing or incorrect."),
@@ -91,7 +91,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Add a node to connect to and attempt to keep 
 QT_TRANSLATE_NOOP("bitcoin-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Allow JSON-RPC connections from specified IP address"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Attempt to recover private keys from a corrupt wallet.dat"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Litecoin version"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Projekt Zespołowy Coin version"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Block creation options:"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot downgrade wallet"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot resolve -bind address: '%s'"),
@@ -109,7 +109,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Error initializing wallet database environmen
 QT_TRANSLATE_NOOP("bitcoin-core", "Error loading block database"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error loading wallet.dat"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error loading wallet.dat: Wallet corrupted"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Error loading wallet.dat: Wallet requires newer version of Litecoin"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Error loading wallet.dat: Wallet requires newer version of Projekt Zespołowy Coin"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error opening block database"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Disk space is low!"),

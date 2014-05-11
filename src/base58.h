@@ -273,7 +273,7 @@ public:
     enum
     {
         //PUBKEY_ADDRESS = 48, // Litecoin addresses start with L
-        PUBKEY_ADDRESS = 38, // Projekt Zespolowy  na G
+        PUBKEY_ADDRESS = 38, // a Projekt Zespolowy Coin  na G
         SCRIPT_ADDRESS = 5,
         PUBKEY_ADDRESS_TEST = 111,
         SCRIPT_ADDRESS_TEST = 196,

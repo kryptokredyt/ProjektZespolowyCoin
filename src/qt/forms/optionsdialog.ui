@@ -36,7 +36,7 @@
           <string>Automatically start Litecoin after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start Litecoin on system login</string>
+          <string>&amp;Start Projekt Zespołowy Coin on system login</string>
          </property>
         </widget>
        </item>

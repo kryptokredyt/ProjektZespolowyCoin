@@ -35,8 +35,10 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // Litecoin: starting difficulty is 1 / 2^12
+//uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
+//uint256 hashGenesisBlock("0xf094a785b3b1d1a60cd5e500be73eb20b32febda0d833c053dae8ebda6706a8f");
+uint256 hashGenesisBlock("0x0c20f8f1ba439bfbca75e98265518ed3479bdc5f4eb6b27231c054676ef47928");
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 12); // Litecoin: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
@@ -68,7 +70,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Litecoin Signed Message:\n";
+const string strMessageMagic = "Projekt Zespołowy Coin Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -1194,6 +1196,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
+    printf("CheckProofOfWork hash: %s\n", hash.ToString().c_str());
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
@@ -2748,7 +2751,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0xf5ae71e26c74beacc88382716aced69cddf3dffff24f384e1808905e0188f68f");
+        hashGenesisBlock = uint256("0x0c20f8f1ba439bfbca75e98265518ed3479bdc5f4eb6b27231c054676ef47928");
     }
 
     //
@@ -2796,23 +2799,71 @@ bool InitBlockIndex() {
         block.nVersion = 1;
         //block.nTime    = 1317972665;
         block.nTime    = 1399681159;
-        block.nBits    = 0x1e0ffff0;
-        block.nNonce   = 2084524493;
+        block.nBits    = 0x1f0ffff0;
+        //block.nNonce   = 2084524493;
+        block.nNonce   = 3320;
 
-        if (fTestNet)
+        /*if (fTestNet)
         {
             //block.nTime    = 1317798646;
             block.nTime    = 1399681084;
-            block.nNonce   = 385270584;
-        }
+            block.nNonce   = 0;
+        }*/
 
         //// debug print
         uint256 hash = block.GetHash();
         printf("%s\n", hash.ToString().c_str());
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
-        assert(block.hashMerkleRoot == uint256("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+        assert(block.hashMerkleRoot == uint256("0xea364f65d9766fe38bcca565803b22d0374f2fd5c86cea59e5af65e2345d4287"));
+/** odtad */
+        // If genesis block hash does not match, then generate new genesis hash.
+                if (true && block.GetHash() != hashGenesisBlock)
+                {
+                    printf("Searching for genesis block...\n");
+                    // This will figure out a valid hash and Nonce if you're
+                    // creating a different genesis block:
+                    uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
+                    uint256 thash;
+                    char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
+
+                    loop
+                    {
+        #if defined(USE_SSE2)
+                        // Detection would work, but in cases where we KNOW it always has SSE2,
+                        // it is faster to use directly than to use a function pointer or conditional.
+        #if defined(_M_X64) || defined(__x86_64__) || defined(_M_AMD64) || (defined(MAC_OSX) && defined(__i386__))
+                        // Always SSE2: x86_64 or Intel MacOS X
+                        scrypt_1024_1_1_256_sp_sse2(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+        #else
+                        // Detect SSE2: 32bit x86 Linux or Windows
+                        scrypt_1024_1_1_256_sp(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+        #endif
+        #else
+                        // Generic scrypt
+                        scrypt_1024_1_1_256_sp_generic(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+        #endif
+                        if (thash <= hashTarget)
+                            break;
+                        if ((block.nNonce & 0xFFF) == 0)
+                        {
+                            printf("nonce %08X: hash = %s (target = %s)\n", block.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+                        }
+                        ++block.nNonce;
+                        if (block.nNonce == 0)
+                        {
+                            printf("NONCE WRAPPED, incrementing time\n");
+                            ++block.nTime;
+                        }
+                    }
+                    printf("block.nTime = %u \n", block.nTime);
+                    printf("block.nNonce = %u \n", block.nNonce);
+                    printf("block.GetHash = %s\n", block.GetHash().ToString().c_str());
+                }
+/** dotad */
         block.print();
+        printf("[]hash: %s\n", hash.ToString().c_str());
+        printf("[]hashGenesisBlock: %s\n", hashGenesisBlock.ToString().c_str());
         assert(hash == hashGenesisBlock);
 
         // Start new block file
@@ -4625,7 +4676,7 @@ void static LitecoinMiner(CWallet *pwallet)
             loop
             {
                 scrypt_1024_1_1_256_sp(BEGIN(pblock->nVersion), BEGIN(thash), scratchpad);
-
+                //printf("LitecoinMiner: scrypt_1024_1_1_256_sp\n");
                 if (thash <= hashTarget)
                 {
                     // Found a solution
@@ -4700,6 +4751,7 @@ void static LitecoinMiner(CWallet *pwallet)
 
 void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 {
+    printf("GenerateBitcoins started\n");
     static boost::thread_group* minerThreads = NULL;
 
     int nThreads = GetArg("-genproclimit", -1);
