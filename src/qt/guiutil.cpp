@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
+﻿// Copyright (c) 2011-2014 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -88,7 +88,7 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
     // return if URI is not valid or is no bitcoin URI
-    if(!uri.isValid() || uri.scheme() != QString("litecoin"))
+    if(!uri.isValid() || uri.scheme() != QString("PZcoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -143,9 +143,9 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("litecoin://"))
+    if(uri.startsWith("PZcoin://"))
     {
-        uri.replace(0, 11, "litecoin:");
+        uri.replace(0, 11, "PZcoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -305,7 +305,7 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Litecoin.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "PZcoin.lnk";
 }
 
 bool GetStartOnSystemStartup()
@@ -387,7 +387,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "litecoin.desktop";
+    return GetAutostartDir() / "PZcoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -428,7 +428,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         // Write a bitcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=Litecoin\n";
+        optionFile << "Name=PZcoin\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
