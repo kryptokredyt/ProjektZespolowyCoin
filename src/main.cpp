@@ -38,7 +38,7 @@ map<uint256, CBlockIndex*> mapBlockIndex;
 //uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
 //uint256 hashGenesisBlock("0xf094a785b3b1d1a60cd5e500be73eb20b32febda0d833c053dae8ebda6706a8f");
 uint256 hashGenesisBlock("0x0c20f8f1ba439bfbca75e98265518ed3479bdc5f4eb6b27231c054676ef47928");
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 12); // PZcoin: starting difficulty is 1 / 2^12
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 12); // Litecoin: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
@@ -1094,9 +1094,9 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     return nSubsidy + nFees;
 }
 
-//static const int64 nTargetTimespan = 3.5 * 24 * 60 * 60; // PZcoin: 3.5 days
+//static const int64 nTargetTimespan = 3.5 * 24 * 60 * 60; // Litecoin: 3.5 days
 static const int64 nTargetTimespan = 1 * 24 * 60 * 60; // Projekt Zespolowy Coin: 1 days
-//static const int64 nTargetSpacing = 2.5 * 60; // PZcoin: 2.5 minutes
+//static const int64 nTargetSpacing = 2.5 * 60; // Litecoin: 2.5 minutes
 static const int64 nTargetSpacing = 2 * 60; // Projekt Zespolowy Coin: 2 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
