@@ -1112,7 +1112,7 @@ void ThreadMapPort()
             }
         }
 
-        string strDesc = "PZcoin " + FormatFullVersion();
+        string strDesc = "Credits " + FormatFullVersion();
 
         try {
             loop {
@@ -1201,7 +1201,7 @@ static const char *strMainNetDNSSeed[][2] = {
 };
 
 static const char *strTestNetDNSSeed[][2] = {
-    {"PZcointools.com", "testnet-seed.PZcointools.com"},
+    {"Creditstools.com", "testnet-seed.Creditstools.com"},
     {"xurious.com", "testnet-seed.ltc.xurious.com"},
     {"wemine-testnet.com", "dnsseed.wemine-testnet.com"},
     {NULL, NULL}
@@ -1759,7 +1759,7 @@ bool BindListenPort(const CService &addrBind, string& strError)
     {
         int nErr = WSAGetLastError();
         if (nErr == WSAEADDRINUSE)
-            strError = strprintf(_("Unable to bind to %s on this computer. PZcoin is probably already running."), addrBind.ToString().c_str());
+            strError = strprintf(_("Unable to bind to %s on this computer. Credits is probably already running."), addrBind.ToString().c_str());
         else
             strError = strprintf(_("Unable to bind to %s on this computer (bind returned error %d, %s)"), addrBind.ToString().c_str(), nErr, strerror(nErr));
         printf("%s\n", strError.c_str());

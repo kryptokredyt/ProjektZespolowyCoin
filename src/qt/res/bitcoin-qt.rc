@@ -20,14 +20,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "PZcoin"
-            VALUE "FileDescription",    "PZcoin-Qt (OSS GUI client for PZcoin)"
+            VALUE "CompanyName",        "Credits"
+            VALUE "FileDescription",    "Credits-Qt (OSS GUI client for Credits)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "PZcoin-qt"
+            VALUE "InternalName",       "Credits-qt"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
-            VALUE "OriginalFilename",   "PZcoin-qt.exe"
-            VALUE "ProductName",        "PZcoin-Qt"
+            VALUE "OriginalFilename",   "Credits-qt.exe"
+            VALUE "ProductName",        "Credits-Qt"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

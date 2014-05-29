@@ -19,7 +19,7 @@ using namespace std;
 using namespace boost;
 
 #if defined(NDEBUG)
-# error "PZcoin cannot be compiled without assertions."
+# error "Credits cannot be compiled without assertions."
 #endif
 
 //
@@ -361,7 +361,7 @@ unsigned int LimitOrphanTxSize(unsigned int nMaxOrphans)
 
 bool CTxOut::IsDust() const
 {
-    // PZcoin: IsDust() detection disabled, allows any valid dust to be relayed.
+    // Credits: IsDust() detection disabled, allows any valid dust to be relayed.
     // The fees imposed on each dust txo is considered sufficient spam deterrant. 
     return false;
 }
@@ -622,7 +622,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
             nMinFee = 0;
     }
 
-    // PZcoin
+    // Credits
     // To limit dust spam, add nBaseFee for each output less than DUST_SOFT_LIMIT
     BOOST_FOREACH(const CTxOut& txout, vout)
         if (txout.nValue < DUST_SOFT_LIMIT)
@@ -1156,7 +1156,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return pindexLast->nBits;
     }
 
-    // PZcoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Credits: This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nInterval-1;
     if ((pindexLast->nHeight+1) != nInterval)
@@ -2104,7 +2104,7 @@ bool CBlock::CheckBlock(CValidationState &state, bool fCheckPOW, bool fCheckMerk
     if (vtx.empty() || vtx.size() > MAX_BLOCK_SIZE || ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return state.DoS(100, error("CheckBlock() : size limits failed"));
 
-    // PZcoin: Special short-term limits to avoid 10,000 BDB lock limit:
+    // Credits: Special short-term limits to avoid 10,000 BDB lock limit:
     if (GetBlockTime() < 1376568000)  // stop enforcing 15 August 2013 00:00:00
     {
         // Rule is: #unique txids referenced <= 4,500
@@ -2266,7 +2266,7 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
 
 bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
 {
-    // PZcoin: temporarily disable v2 block lockin until we are ready for v2 transition
+    // Credits: temporarily disable v2 block lockin until we are ready for v2 transition
     return false;
     unsigned int nFound = 0;
     for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
@@ -3135,7 +3135,7 @@ bool static AlreadyHave(const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // PZcoin: increase each by adding 2 to bitcoin's value.
+unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // Credits: increase each by adding 2 to bitcoin's value.
 
 
 void static ProcessGetData(CNode* pfrom)
@@ -4177,7 +4177,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// PZcoinMiner
+// CreditsMiner
 //
 
 int static FormatHashBlocks(void* pbuffer, unsigned int len)
@@ -4590,7 +4590,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         return false;
 
     //// debug print
-    printf("PZcoinMiner:\n");
+    printf("CreditsMiner:\n");
     printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
     printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4599,7 +4599,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("PZcoinMiner : generated block is stale");
+            return error("CreditsMiner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4613,17 +4613,17 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error("PZcoinMiner : ProcessBlock, block not accepted");
+            return error("CreditsMiner : ProcessBlock, block not accepted");
     }
 
     return true;
 }
 
-void static PZcoinMiner(CWallet *pwallet)
+void static CreditsMiner(CWallet *pwallet)
 {
-    printf("PZcoinMiner started\n");
+    printf("CreditsMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("PZcoin-miner");
+    RenameThread("Credits-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -4645,7 +4645,7 @@ void static PZcoinMiner(CWallet *pwallet)
         CBlock *pblock = &pblocktemplate->block;
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-        printf("Running PZcoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running CreditsMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -4676,7 +4676,7 @@ void static PZcoinMiner(CWallet *pwallet)
             loop
             {
                 scrypt_1024_1_1_256_sp(BEGIN(pblock->nVersion), BEGIN(thash), scratchpad);
-                //printf("PZcoinMiner: scrypt_1024_1_1_256_sp\n");
+                //printf("CreditsMiner: scrypt_1024_1_1_256_sp\n");
                 if (thash <= hashTarget)
                 {
                     // Found a solution
@@ -4744,7 +4744,7 @@ void static PZcoinMiner(CWallet *pwallet)
     } }
     catch (boost::thread_interrupted)
     {
-        printf("PZcoinMiner terminated\n");
+        printf("CreditsMiner terminated\n");
         throw;
     }
 }
@@ -4770,7 +4770,7 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&PZcoinMiner, pwallet));
+        minerThreads->create_thread(boost::bind(&CreditsMiner, pwallet));
 }
 
 // Amount compression:
